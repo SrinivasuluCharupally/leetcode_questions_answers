@@ -29,7 +29,7 @@ void recursion(string str, int start, int end, string tempArray, vector<string> 
 
 	else {
 		for(int i = 1; i <= str.size() - start;  i++){
-			tempArray = str.substr(start, i);
+			tempArray = str.substr(start, i); //cout << tempArray << " " << start+i-1 << endl;
 			if(isPalindrome(tempArray)) {resultMatrix.push_back(tempArray); }
 			recursion(tempArray, start+i-1, tempArray.size(), tempArray, resultMatrix);
 		}
