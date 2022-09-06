@@ -10,13 +10,16 @@ int isSafe(int M[][COL], int row, int col,
     return (row >= 0) && (row < ROW) && (col >= 0) && (col < COL) && (M[row][col] && !visited[row][col]);
 }
  
+
+static int rowNbr[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
+static int colNbr[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
+
 void DFS(int M[][COL], int row, int col,
          bool visited[][COL])
 {
 
     // this is to check all the neighbours of the the given positions... all 8 sides of given location
-    static int rowNbr[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
-    static int colNbr[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
+
  
     visited[row][col] = true;
  
