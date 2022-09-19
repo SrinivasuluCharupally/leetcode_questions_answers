@@ -25,9 +25,9 @@ void setZeros(int input[][4], int x, int y) {
 }
 
 int main() {
-	int input[][4] = 	{ {1,3,4,0},
-				  {2,4,5,1},
-				  {0,1,4,4},
+	int input[][4] = 	{ {1,3,4,1},
+				  {2,0,5,1},
+				  {1,1,4,4},
 				  {1,3,4,5}};
 	for(int i = 0; i < 4; i++) {
 	       printf("\n");	
