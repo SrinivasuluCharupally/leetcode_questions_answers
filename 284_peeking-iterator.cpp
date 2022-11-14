@@ -1,0 +1,3 @@
+// this is simple peek(), next(), hasNext() implementation...
+//
+//
