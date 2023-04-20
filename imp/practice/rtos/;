@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <semaphore.h>
+#include <unistd.h>
+
+#define NUM_RESOURCES 3
+sem_t semaphore;
+int count = 0;
+
+// Define a function that simulates the use of a resource
+void* use_resource(void* arg) {
+    int resource_number = *(int*)arg;
+    printf("Thread %d is waiting to use resource %d\n", (int)pthread_self(), resource_number);
+    
+    // Acquire the semaphore to use the resource
+    sem_wait(&semaphore);
+    
+    printf("Thread %d is using resource %d == %d \n", (int)pthread_self(), resource_number,count);
+    count++;
+
+    // Simulate using the resource
+    sleep(1);
+    
+    printf("Thread %d has finished using resource %d\n", (int)pthread_self(), resource_number);
+    
+    // Release the semaphore to make the resource available for use by another thread
+    sem_post(&semaphore);
+    
+    pthread_exit(NULL);
+}
+
+int main() {
+    int i;
+    pthread_t threads[NUM_RESOURCES];
+    int resource_numbers[NUM_RESOURCES];
+    
+    // Initialize the semaphore with a count of 3
+    sem_init(&semaphore, 0, 3);
+    
+    // Create threads to use the resources
+    for (i = 0; i < NUM_RESOURCES; i++) {
+        resource_numbers[i] = i + 1;
+        pthread_create(&threads[i], NULL, use_resource, (void*)&resource_numbers[i]);
+    }
+    
+    // Wait for the threads to finish
+    for (i = 0; i < NUM_RESOURCES; i++) {
+        pthread_join(threads[i], NULL);
+    }
+    
+    // Destroy the semaphore
+    sem_destroy(&semaphore);
+    
+    return 0;
+}
+
